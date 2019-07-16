@@ -1,0 +1,3 @@
+# take file /etc/passd for example, only print its tenth row.
+
+nl /etc/passwd | sed -n '10p'
