@@ -1,0 +1,12 @@
+# re-start shell
+exec "$SHELL"
+
+# print the specified row in the file
+# take file /etc/passd for example, only print its tenth row.
+
+nl /etc/passwd | sed -n '10p'
+
+
+# show PATH in a human-readable way
+
+tr ':' '\n' <<< "$PATH"
