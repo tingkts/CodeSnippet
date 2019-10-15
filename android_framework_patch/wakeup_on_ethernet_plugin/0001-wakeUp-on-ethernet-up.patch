@@ -1,0 +1,40 @@
+From 4f5cbef04b739ae37100e1704a59d9d50168064d Mon Sep 17 00:00:00 2001
+From: tingsung <tingsung@msi.com>
+Date: Fri, 16 Aug 2019 13:46:56 +0800
+Subject: [PATCH] wakeUp on ethernet up
+
+---
+ .../com/android/server/NetworkManagementService.java   | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/services/core/java/com/android/server/NetworkManagementService.java b/services/core/java/com/android/server/NetworkManagementService.java
+index 6d6fd84dafa..40b0d47805c 100644
+--- a/services/core/java/com/android/server/NetworkManagementService.java
++++ b/services/core/java/com/android/server/NetworkManagementService.java
+@@ -87,6 +87,7 @@ import android.os.ServiceSpecificException;
+ import android.os.StrictMode;
+ import android.os.SystemClock;
+ import android.os.SystemProperties;
++import android.os.IPowerManager;
+ import android.os.Trace;
+ import android.provider.Settings;
+ import android.telephony.DataConnectionRealTimeInfo;
+@@ -460,6 +461,15 @@ public class NetworkManagementService extends INetworkManagementService.Stub
+      * (typically, an Ethernet cable has been plugged-in or unplugged).
+      */
+     private void notifyInterfaceLinkStateChanged(String iface, boolean up) {
++        if (up) {
++            try {
++                IPowerManager pm = IPowerManager.Stub.asInterface(
++                    ServiceManager.getService(Context.POWER_SERVICE));
++                pm.wakeUp(SystemClock.uptimeMillis(), "wakeUp on ethernet up", mContext.getOpPackageName());
++            } catch (RemoteException e) {
++                Slog.d(TAG, "", e.fillInStackTrace());
++            }
++        }
+         invokeForAllObservers(o -> o.interfaceLinkStateChanged(iface, up));
+     }
+ 
+-- 
+2.21.0
+
