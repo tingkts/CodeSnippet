@@ -13,8 +13,6 @@ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 100
 #sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
 ```
 
-</br>
-
 #### show cpu/memory profile
 ```
 # list hw
@@ -32,8 +30,6 @@ sudo cat /proc/meminfo | grep "Total"
 # number of physical Memories
 sudo dmidecode -t memory | grep "Size:"
 ```
-
-</br>
 
 #### format sdcard
 ```
@@ -70,17 +66,12 @@ $ sudo fdisk /dev/sde
     w : write partition table
 ```
 
-</br>
-
 #### mount net drive
 ```
 # mount net drive
 sudo umount /media/ting/netDrive/WindowsShare/Home_NbAspire/Share
 sudo mount -t cifs -o username="***",password="***",rw,users,uid=1000,gid=1000 //*ip*/Share /media/ting/netDrive/WindowsShare/Home_NbAspire/Share
 ```
-
-
-</br>
 
 #### miscellaneous
 ```
