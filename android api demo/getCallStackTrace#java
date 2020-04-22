@@ -1,0 +1,17 @@
+
+1554	     Boolean isCallByCTS(){
+1555	         boolean isCTS=false;
+1556	         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+1557	         String temp="",fullName="",callPkg="";
+1558	         
+1559	         for(int i =0;i<stackTraceElements.length;i++){
+1560	             fullName = stackTraceElements[i].getClassName();
+1561	             temp =fullName.substring(0,fullName.lastIndexOf('.'));
+1562	             //Log.d(TAG,"isCallByCTS:package="+temp);
+1563	             if(temp.equals("android.bluetooth.cts") ){                    
+1564	                 isCTS=true;
+1565	                 break;
+1566	             }
+1567	         }
+1568	         return isCTS;
+1569	     }
