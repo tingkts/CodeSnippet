@@ -64,6 +64,9 @@ $ sudo fdisk /dev/sde
     p : list partition
     d : delete partition
     w : write partition table
+
+$ sudo gdisk /dev/sde
+
 ```
 
 #### mount net drive
