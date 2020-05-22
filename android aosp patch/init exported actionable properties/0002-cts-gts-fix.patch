@@ -1,0 +1,37 @@
+From 2e505bd2f024ca24c9357ed5102eb0c0810c3204 Mon Sep 17 00:00:00 2001
+From: "yingchun.chen" <yingchung.chen@nxp.com>
+Date: Wed, 20 May 2020 13:13:44 +0800
+Subject: [PATCH] 0016-cts-gts-fix.patch Fix side effect of patch
+ 0014-cts-gts-fix.patch, such as failed case: run cts -m
+ CtsDevicePolicyManagerTestCases -t
+ com.android.cts.devicepolicy.ManagedProfileTest#testNfcRestriction
+
+---
+ .../java/com/android/server/am/ActivityManagerService.java    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java b/frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java
+index 99d3b52af7..31b4911b82 100644
+--- a/frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java
++++ b/frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java
+@@ -4484,7 +4484,7 @@ public class ActivityManagerService extends IActivityManager.Stub
+             String seInfo, String requiredAbi, String instructionSet, String invokeWith,
+             long startTime) {
+         try {
+-            if (app.processName.contains("android.media.cts")
++            if ((app.processName != null) && app.processName.contains("android.media.cts")
+                 && !"1".equals(SystemProperties.get("sys.cts.media.running"))) {
+                 Slog.i(TAG, "Setting SystemProperties:cts.media.running to 1 ");
+                 SystemProperties.set("sys.cts.media.running", "1");
+@@ -7295,7 +7295,7 @@ public class ActivityManagerService extends IActivityManager.Stub
+             }
+ 
+             mAppErrors.resetProcessCrashTimeLocked(packageName == null, appId, userId);
+-            if (packageName.contains("android.media.cts")
++            if ((packageName != null) && packageName.contains("android.media.cts")
+                 && "1".equals(SystemProperties.get("sys.cts.media.running"))) {
+                 Slog.i(TAG, "Setting SystemProperties:cts.media.running to 0 ");
+                 SystemProperties.set("sys.cts.media.running", "0");
+-- 
+2.26.2
+

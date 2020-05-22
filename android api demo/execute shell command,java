@@ -1,0 +1,40 @@
+private String cmd_exec(String ls_cmd) {
+    String ls_result = "";
+    try{
+        String[] ls_cmd_split = {"sh", "-c", ls_cmd};
+        Process p = new ProcessBuilder(ls_cmd_split).redirectErrorStream(true).start();
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        String result = "";
+        while ((result = br.readLine()) != null) {
+            if (!result.trim().equals("")) {
+                if (ls_result.equals("")) {
+                    ls_result = result.trim();
+                } else {
+                    ls_result = ls_result + "\n" + result.trim();
+                }
+            }
+        }
+    } catch(Exception e) {
+        Log.d("Exception", e.getMessage());
+    }
+    return ls_result;
+}
+
+
+// e.g. ProcessBuilder :
+
+Process process = new ProcessBuilder("/system/bin/ping").redirectErrorStream(true).start();
+OutputStream stdout = process.getOutputStream();
+InputStream stdin = process.getInputStream();
+BufferedReader reader = new BufferedReader(new InputStreamReader(stdin));
+BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdout));
+
+// e.g. Runtime.getRuntime().exec() :
+
+Process process = Runtime.getRuntime().exec("/system/bin/ping");
+OutputStream stdout = process.getOutputStream();
+InputStream stderr = process.getErrorStream();
+InputStream stdin = process.getInputStream();
+BufferedReader reader = new BufferedReader(new InputStreamReader(stdin));
+BufferedReader err= new BufferedReader(new InputStreamReader(stderr));
+BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdout));
