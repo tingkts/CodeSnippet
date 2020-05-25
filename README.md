@@ -1,3 +1,3 @@
-#### Code Snippets
+#### Miscellaneous Code Snippets and Notes
 
-Just record some useful code snippets as the cheat sheet.
+Just record awesome code snippets and notes as the cheat sheet.
