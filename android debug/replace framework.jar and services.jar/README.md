@@ -1,0 +1,3 @@
+- [Android 9替换framework.jar和services.jar](https://www.google.com/search?q=Android+9%E6%9B%BF%E6%8D%A2framework.jar%E5%92%8Cservices.jar&rlz=1C1GCEU_zh-TWTW892TW892&oq=Android+9%E6%9B%BF%E6%8D%A2framework.jar%E5%92%8Cservices.jar&aqs=chrome..69i57.8704j0j1&sourceid=chrome&ie=UTF-8)
+  - [Android 8.0替换framework.jar和services.jar_移动开发_红旺永福-CSDN博客](https://blog.csdn.net/sinat_22657459/article/details/100640522)
+  - [解决android framework开发无法替换jar包(如services.jar，framework.jar)的问题_移动开发_xlnaan的博客-CSDN博客](https://blog.csdn.net/xlnaan/article/details/79916463)
