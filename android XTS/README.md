@@ -20,8 +20,21 @@
 
         `run retry --retry session` : to execute retry session
 
+- STS :
 
+    - `run sts-engbuild -m StsHostTestCases -t android.security.sts.Poc16_12#testPocCVE_2014_9910 --disable-reboot`
+
+    - `run sts-engbuild-no-spl-lock -m StsHostTestCases -t android.security.sts.Poc16_12#testPocCVE_2014_9910 --disable-reboot`
 
 ### reference
 
 - [AndroidTV CTS/VTS/GTS/STS - 台部落](https://www.twblogs.net/a/5d085150bd9eee1e5c8111d9)
+
+
+### utility : java-decompiler
+
+- [java-decompiler/jd-gui: A standalone Java Decompiler GUI](https://github.com/java-decompiler/jd-gui)
+
+- [skylot/jadx: Dex to Java decompiler](https://github.com/skylot/jadx)
+
+- [Java Decompiler - Atanas Neshkov Ltd Software development and IT solutions](http://www.neshkov.com/)
