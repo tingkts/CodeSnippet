@@ -1,5 +1,5 @@
 From 8a7525db52953bdbec75baa8c41d4b687435cbb5 Mon Sep 17 00:00:00 2001
-From: tingsung <tingsung@msi.com>
+From: ting <ting@gmail.com>
 Date: Mon, 19 Aug 2019 13:03:32 +0800
 Subject: [PATCH] update PLATFORM_SECURITY_PATCH to 2019-09-05
 
@@ -18,8 +18,8 @@ index d386a527f..8ada23dc5 100644
 -      PLATFORM_SECURITY_PATCH := 2019-03-05
 +      PLATFORM_SECURITY_PATCH := 2019-09-05
  endif
- 
+
  ifndef PLATFORM_SECURITY_PATCH_TIMESTAMP
--- 
+--
 2.21.0
 

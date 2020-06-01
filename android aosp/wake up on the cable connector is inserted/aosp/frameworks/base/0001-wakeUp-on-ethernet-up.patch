@@ -1,5 +1,5 @@
 From 4f5cbef04b739ae37100e1704a59d9d50168064d Mon Sep 17 00:00:00 2001
-From: tingsung <tingsung@msi.com>
+From: ting <ting@gmail.com>
 Date: Fri, 16 Aug 2019 13:46:56 +0800
 Subject: [PATCH] wakeUp on ethernet up
 
@@ -34,7 +34,7 @@ index 6d6fd84dafa..40b0d47805c 100644
 +        }
          invokeForAllObservers(o -> o.interfaceLinkStateChanged(iface, up));
      }
- 
--- 
+
+--
 2.21.0
 
