@@ -12,7 +12,13 @@
 
 - CTS :
 
-    - `run cts -m CtsMediaStressTestCases -t android.mediastress.cts.MediaRecorderStressTest#testStressRecordVideoAndPlayback`
+    ```
+       run cts -m CtsMediaStressTestCases
+
+       run cts -m CtsMediaStressTestCases -t android.mediastress.cts.MediaRecorderStressTest
+
+       run cts -m CtsMediaStressTestCases -t android.mediastress.cts.MediaRecorderStressTest#testStressRecordVideoAndPlayback
+    ```
 
     - cts retry :
 
@@ -20,21 +26,57 @@
 
         `run retry --retry session` : to execute retry session
 
+- GTS :
+
+  host pre-setting:
+  - Put [gts-harman-public.json](./gts-harman-public.json) to your local path ，type APE_API_KEY=export ‘your local path/gts-harman-public.json’
+  - ensure aapy, adb installed.
+  - ensure JDK version > 1.8
+
+  device pre-setting:
+  - WiFi ON, link to IPV6 network
+  - Bluetooth ON
+  - Display → Sleep → 30 minutes
+  - Location ON
+  - Sound is adjusted to the minimum
+  - Security → Screen lock → None
+  - Security → Unknown sources ON
+  - Developer options → Stay awake ON
+  - Developer options → USB debugging ON
+  - Launch Google Chrome，tap to accept
+
+- VTS :
+
+     For Android version of the first approved build is lower than 8.x, if its MR builds upgrade to 8.x or higher, VTS and CTS-ON-GSI are optional(no need to run) ; <br>
+     For Android 8.x and higher new device, VTS and CTS-ON-GSI are mandatory, and all MRs need run them too.
+
+
 - STS :
 
-    - `run sts-engbuild -m StsHostTestCases -t android.security.sts.Poc16_12#testPocCVE_2014_9910 --disable-reboot`
+    ```
+       run sts-engbuild -m StsHostTestCases -t android.security.sts.Poc16_12#testPocCVE_2014_9910 --disable-reboot
 
-    - `run sts-engbuild-no-spl-lock -m StsHostTestCases -t android.security.sts.Poc16_12#testPocCVE_2014_9910 --disable-reboot`
+       run sts-engbuild-no-spl-lock -m StsHostTestCases -t android.security.sts.Poc16_12#testPocCVE_2014_9910 --disable-reboot
+    ```
 
-### reference
+
+
+
+<br>
+
+### Reference
 
 - [AndroidTV CTS/VTS/GTS/STS - 台部落](https://www.twblogs.net/a/5d085150bd9eee1e5c8111d9)
 
 
-### utility : java-decompiler
+<br>
+
+### Utility : Java-Decompiler
 
 - [java-decompiler/jd-gui: A standalone Java Decompiler GUI](https://github.com/java-decompiler/jd-gui)
 
 - [skylot/jadx: Dex to Java decompiler](https://github.com/skylot/jadx)
 
 - [Java Decompiler - Atanas Neshkov Ltd Software development and IT solutions](http://www.neshkov.com/)
+
+> Not all APKs can be read after anti-group translation. If it is protected by ProGuard, the source code has been confused and almost unreadable, such as GMS App!
