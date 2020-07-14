@@ -4,6 +4,7 @@ Others :
 
   - systrace, traceview and dmtracedump
   
+ <br/>
  
  Set kernel logging LEVEL (1-9)
   
