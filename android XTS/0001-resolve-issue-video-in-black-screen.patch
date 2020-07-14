@@ -1,0 +1,180 @@
+From dfd1d1c4c23575f10043688e8ea1c4b68644cd5a Mon Sep 17 00:00:00 2001
+From: ting <ting@toogle.com>
+Date: Thu, 9 Jul 2020 21:55:24 +0800
+Subject: [PATCH] resolve issue: video-in black screen
+
+---
+ .../hardware/camera2/CameraManager.java       | 30 +++++++++++---
+ core/jni/android_hardware_Camera.cpp          | 41 +++++++++++--------
+ .../server/am/ActivityManagerService.java     | 10 +++++
+ 3 files changed, 59 insertions(+), 22 deletions(-)
+
+diff --git a/core/java/android/hardware/camera2/CameraManager.java b/core/java/android/hardware/camera2/CameraManager.java
+index 89381bd1e15..38461cd614c 100644
+--- a/core/java/android/hardware/camera2/CameraManager.java
++++ b/core/java/android/hardware/camera2/CameraManager.java
+@@ -21,6 +21,7 @@ import android.annotation.NonNull;
+ import android.annotation.Nullable;
+ import android.annotation.RequiresPermission;
+ import android.annotation.SystemService;
++import android.app.ActivityThread;
+ import android.content.Context;
+ import android.hardware.CameraInfo;
+ import android.hardware.CameraStatus;
+@@ -101,16 +102,19 @@ public final class CameraManager {
+      */
+     @NonNull
+     public String[] getCameraIdList() throws CameraAccessException {
+-
+ 		String projectCode = android.os.SystemProperties.get("ro.build.product", "") ;
+ 		if(projectCode.equals("te24")
+ 			||projectCode.equals("te24p")
+             ||projectCode.equals("te25"))
+ 			return new String[0];
+-		else
+-			return new String[]{"0"};
+-
+-        //return CameraManagerGlobal.get().getCameraIdList();
++        else if (projectCode.contains("te23")) {
++            String packageName = ActivityThread.currentPackageName();
++            if (packageName.equals("android.camera.cts")) {
++                Log.d(TAG, "getCameraIdList: " + packageName + " return {\"0\"} in " + projectCode);
++                return new String[]{"0"};
++            }
++        }
++        return CameraManagerGlobal.get().getCameraIdList();
+     }
+
+     /**
+@@ -1045,6 +1049,14 @@ public final class CameraManager {
+                         new Runnable() {
+                             @Override
+                             public void run() {
++                                String productName = SystemProperties.get("ro.build.product");
++                                String packageName = ActivityThread.currentPackageName();
++                                String className = callback.getClass().getName();
++                                if (!id.equals("0") && productName.contains("te23") && packageName.equals("android.camera.cts")
++                                        && className.contains("android.hardware.camera2.cts.CameraManagerTest")) {
++                                    Log.d(TAG, "skip " + packageName + "/" + className + ".onCameraAvailable in " + productName);
++                                    return;
++                                }
+                                 callback.onCameraAvailable(id);
+                             }
+                         });
+@@ -1058,6 +1070,14 @@ public final class CameraManager {
+                         new Runnable() {
+                             @Override
+                             public void run() {
++                                String productName = SystemProperties.get("ro.build.product");
++                                String packageName = ActivityThread.currentPackageName();
++                                String className = callback.getClass().getName();
++                                if (!id.equals("0") && productName.contains("te23") && packageName.equals("android.camera.cts")
++                                        && className.contains("android.hardware.camera2.cts.CameraManagerTest")) {
++                                    Log.d(TAG, "skip " + packageName + "/" + className + ".onCameraUnavailable in " + productName);
++                                    return;
++                                }
+                                 callback.onCameraUnavailable(id);
+                             }
+                         });
+diff --git a/core/jni/android_hardware_Camera.cpp b/core/jni/android_hardware_Camera.cpp
+index 3ec0d45dcf7..dccce08268e 100644
+--- a/core/jni/android_hardware_Camera.cpp
++++ b/core/jni/android_hardware_Camera.cpp
+@@ -521,17 +521,22 @@ void JNICameraContext::clearCallbackBuffers_l(JNIEnv *env, Vector<jbyteArray> *b
+ }
+
+ static jint android_hardware_Camera_getNumberOfCameras(JNIEnv *env, jobject thiz)
+-{
++{
+ 	char projectId[256]="";
+ 	memset(projectId,0,256);
+-	property_get("ro.build.product", projectId, "NA");
+-	ALOGE("CameraService::connect projectId[%s]", projectId);
++	property_get("ro.build.product", projectId, "NA");
++	ALOGE("%s %s", __func__, projectId);
+ 	if((strcmp( projectId , "te24")==0)||(strcmp( projectId, "te24p")==0)
+ 			|| (strcmp( projectId , "te25")==0)){
+ 		return 0;
+-	}else if((strcmp(projectId , "te23")==0)||(strcmp( projectId, "te23p")==0)){
+-		return 1;
++	} else if ((strcmp(projectId , "te23") == 0) || (strcmp( projectId, "te23p") == 0)) {
++        char ctsCameraRunning[256]="";
++        property_get("sys.cts.camera.running", ctsCameraRunning, "0");
++        if ((strcmp(ctsCameraRunning , "1") == 0)) {
++            return 1;
++        }
+ 	}
++
+     return Camera::getNumberOfCameras();
+ }
+
+@@ -539,24 +544,26 @@ static void android_hardware_Camera_getCameraInfo(JNIEnv *env, jobject thiz,
+     jint cameraId, jobject info_obj)
+ {
+     CameraInfo cameraInfo;
+-
++
+ 	char projectId[256]="";
+-	memset(projectId,0,256);
+-	property_get("ro.build.product", projectId, "NA");
+-
+-	ALOGE("CameraService::connect projectId[%s]", projectId);
++	memset(projectId,0,256);
++	property_get("ro.build.product", projectId, "NA");
++
++	ALOGE("%s %s", __func__, projectId);
+ 	if((strcmp( projectId , "te24")==0)
+ 	     ||(strcmp( projectId, "te24p")==0) || (strcmp( projectId, "te25")==0)){
+         ALOGE("%s: Unknown camera ID %d", __FUNCTION__, cameraId);
+         jniThrowRuntimeException(env, "Unknown camera ID");
+-	}else if(((strcmp(projectId , "te23")==0)
+-		||(strcmp( projectId, "te23p")==0))&& cameraId > 0){
+-        ALOGE("%s: Unknown camera ID %d", __FUNCTION__, cameraId);
+-        jniThrowRuntimeException(env, "Unknown camera ID");
++	} else if (cameraId > 0 && ((strcmp(projectId, "te23") == 0) || (strcmp(projectId, "te23p")==0))) {
++        char ctsCameraRunning[256]="";
++        property_get("sys.cts.camera.running", ctsCameraRunning, "0");
++        if ((strcmp(ctsCameraRunning , "1") == 0)) {
++            ALOGE("%s: Unknown camera ID %d", __FUNCTION__, cameraId);
++            jniThrowRuntimeException(env, "Unknown camera ID");
++        }
+ 	}
+-
+-
+-    if (cameraId >= Camera::getNumberOfCameras() || cameraId < 0 ) {
++
++    if (cameraId >= Camera::getNumberOfCameras() || cameraId < 0 ) {
+         ALOGE("%s: Unknown camera ID %d", __FUNCTION__, cameraId);
+         jniThrowRuntimeException(env, "Unknown camera ID");
+         return;
+diff --git a/services/core/java/com/android/server/am/ActivityManagerService.java b/services/core/java/com/android/server/am/ActivityManagerService.java
+index 7b1f6fb4d7c..aee003da735 100644
+--- a/services/core/java/com/android/server/am/ActivityManagerService.java
++++ b/services/core/java/com/android/server/am/ActivityManagerService.java
+@@ -4494,6 +4494,11 @@ public class ActivityManagerService extends IActivityManager.Stub
+                 Slog.i(TAG, "Setting SystemProperties:cts.view.running to 1 ");
+                 SystemProperties.set("sys.cts.view.running", "1");
+             }
++            if ((app.processName != null) && app.processName.contains("android.camera.cts")
++                && !"1".equals(SystemProperties.get("sys.cts.camera.running"))) {
++                Slog.i(TAG, "Setting SystemProperties:cts.camera.running to 1 ");
++                SystemProperties.set("sys.cts.camera.running", "1");
++            }
+             Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "Start proc: " +
+                     app.processName);
+             checkTime(startTime, "startProcess: asking zygote to start proc");
+@@ -7311,6 +7316,11 @@ public class ActivityManagerService extends IActivityManager.Stub
+                 Slog.i(TAG, "Setting SystemProperties:cts.view.running to 0 ");
+                 SystemProperties.set("sys.cts.view.running", "0");
+             }
++            if ((packageName != null) && packageName.contains("android.camera.cts")
++                && "1".equals(SystemProperties.get("sys.cts.camera.running"))) {
++                Slog.i(TAG, "Setting SystemProperties:cts.camera.running to 0 ");
++                SystemProperties.set("sys.cts.camera.running", "0");
++            }
+         }
+
+         boolean didSomething = killPackageProcessesLocked(packageName, appId, userId,
+--
+2.21.0
+

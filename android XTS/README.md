@@ -1,6 +1,8 @@
 
 ### Android XTS
 
+<br/>
+
 | XTS  | description |
 | ------------- | ------------- |
 | [CTS](https://source.android.com/compatibility/cts)  | Compatibility Test Suite  |
@@ -10,14 +12,20 @@
 | [VTS](https://source.android.com/compatibility/vts)  | HIDL Service Test Suite  |
 | [STS](https://www.google.com/search?rlz=1C1GCEU_zh-TWTW892TW892&sxsrf=ALeKk02iUxZOZzeBJpKAZq8b1S3L_v_3Ng%3A1590400008373&ei=CJTLXpq2FuTRmAWvnI7ADQ&q=android+STS&oq=android+STS&gs_lcp=CgZwc3ktYWIQAzIECCMQJzICCAAyAggAMgYIABAHEB4yBggAEAcQHjIICAAQBxAKEB4yBwgAEAoQywEyBQgAEMsBMgcIABAKEMsBMggIABAHEAoQHjoECAAQRzoECAAQQzoECAAQCjoICAAQBxAFEB46BwgjELACECc6BAgAEA1QpEVY401gw1BoAHACeACAATmIAY4DkgEBOJgBAKABAaoBB2d3cy13aXo&sclient=psy-ab&ved=0ahUKEwia2rLc3c7pAhXkKKYKHS-OA9gQ4dUDCAw&uact=5)  | Security Test Suite for security patch |
 
+<br/>
+
 - CTS :
 
     ```
+       // run the test module
        run cts -m CtsMediaStressTestCases
 
+       // run the test case
        run cts -m CtsMediaStressTestCases -t android.mediastress.cts.MediaRecorderStressTest
-
        run cts -m CtsMediaStressTestCases -t android.mediastress.cts.MediaRecorderStressTest#testStressRecordVideoAndPlayback
+
+       // run the test plan
+       run cts-camera
     ```
 
     - cts retry :
@@ -25,6 +33,8 @@
         `l r` : to check the retry session
 
         `run retry --retry session` : to execute retry session
+
+<br/>
 
 - GTS :
 
@@ -45,11 +55,15 @@
   - Developer options → USB debugging ON
   - Launch Google Chrome，tap to accept
 
+<br/>
+
 - VTS :
 
      For Android version of the first approved build is lower than 8.x, if its MR builds upgrade to 8.x or higher, VTS and CTS-ON-GSI are optional(no need to run) ; <br>
      For Android 8.x and higher new device, VTS and CTS-ON-GSI are mandatory, and all MRs need run them too.
 
+
+<br/>
 
 - STS :
 
@@ -80,3 +94,12 @@
 - [Java Decompiler - Atanas Neshkov Ltd Software development and IT solutions](http://www.neshkov.com/)
 
 > Not all APKs can be read after anti-group translation. If it is protected by ProGuard, the source code has been confused and almost unreadable, such as GMS App!
+
+
+
+<br>
+
+
+### Trick: how to skip cts in android native code
+
+  - set flag through system properties: [0001-resolve-issue-video-in-black-screen.patch](./0001-resolve-issue-video-in-black-screen.patch)
