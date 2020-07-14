@@ -103,3 +103,23 @@
 ### Trick: how to skip cts in android native code
 
   - set flag through system properties: [0001-resolve-issue-video-in-black-screen.patch](./0001-resolve-issue-video-in-black-screen.patch)
+
+
+<br>
+
+### Tip: Camera XTS
+
+  - CTS
+    - run cts-camera
+    - CtsCameraApi25TestCases
+
+  - CTS-I
+    - CtsCameraTestCases
+
+  - CTS-V (manually testing)
+    - camera category
+    - camera sub-items in BYOD Managed Provisioning category
+
+  - GTS
+    - GtsCameraTestCases
+    - GtsAssistantHostTestCases
