@@ -112,9 +112,11 @@
   - CTS
     - run cts-camera
     - CtsCameraApi25TestCases
+    - CtsMediaTestCases
 
   - CTS-I
     - CtsCameraTestCases
+    - CtsMediaTestCases
 
   - CTS-V (manually testing)
     - camera category
