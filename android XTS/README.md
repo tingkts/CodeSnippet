@@ -131,4 +131,4 @@
 
 ### Note: 
 
- - GTS and STS tool/source code are not open published, is OEM/vendor private licensed.
+ - GTS and STS tool/source code are not open published, are limited by OEM/vendor private licensed.
