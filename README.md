@@ -12,4 +12,4 @@ Just record awesome code snippets and notes as the cheat sheet.
   - [wxMEdit](https://wxmedit.github.io/)
 
 - License : 
-  - [wHexCmp2](https://www.fairdell.com/hexcmp/)
+  - [HexCmp2](https://www.fairdell.com/hexcmp/)
