@@ -6,7 +6,7 @@ Just record awesome code snippets and notes as the cheat sheet.
 <br/>
 
 
-#### Hex Editor
+#### Hex Editor/Compare
 
 - Free : 
   - [wxMEdit](https://wxmedit.github.io/)
