@@ -8,6 +8,6 @@ Others :
  
  Set kernel logging LEVEL (1-9)
   
-  - dmesg -n1
-  - dmesg -n5 / dmesg -n9
+  - dmesg -n 1
+  - dmesg -n 5 / dmesg -n 9
  
