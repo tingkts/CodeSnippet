@@ -89,9 +89,9 @@
 
 - [java-decompiler/jd-gui: A standalone Java Decompiler GUI](https://github.com/java-decompiler/jd-gui)
 
-- [skylot/jadx: Dex to Java decompiler](https://github.com/skylot/jadx)
+- [skylot/jadx: Dex to Java decompiler](https://github.com/skylot/jadx) &ensp;&nbsp;- __*pretty good*__
 
-- [Java Decompiler - Atanas Neshkov Ltd Software development and IT solutions](http://www.neshkov.com/)
+- [Java Decompiler - Atanas Neshkov Ltd Software development and IT solutions](http://www.neshkov.com/) &ensp;&nbsp;- __*with charged license*__
 
 > Not all APKs can be read after anti-group translation. If it is protected by ProGuard, the source code has been confused and almost unreadable, such as GMS App!
 
