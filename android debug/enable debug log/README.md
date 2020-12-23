@@ -1,13 +1,13 @@
 ### log level
 
 ```
-    Verbose
-    Devug
------------------------
-    <default>
-    Info
-    Warn
-    Error
+    Verbose        2
+    Devug          3
+------------------------------------------------    
+    Info           4    <default log level>
+    Warn           5
+    Error          6
+    Assert, WTF    7
 ```
 
 ### enable debug log
