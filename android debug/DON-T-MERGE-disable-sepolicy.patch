@@ -1,0 +1,25 @@
+From 19ee6bd29d6ef12b076fa6982db1ecf68736dc94 Mon Sep 17 00:00:00 2001
+From: ting <ting@gmail.com>
+Date: Tue, 8 Dec 2020 09:47:53 +0800
+Subject: [PATCH] DON'T MERGE: disable sepolicy
+
+---
+ LA.UM.7.6.2/LINUX/android/device/qcom/ms57693_64/BoardConfig.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/LA.UM.7.6.2/LINUX/android/device/qcom/ms57693_64/BoardConfig.mk b/LA.UM.7.6.2/LINUX/android/device/qcom/ms57693_64/BoardConfig.mk
+index dc1143d8b3c..e78b987d686 100644
+--- a/LA.UM.7.6.2/LINUX/android/device/qcom/ms57693_64/BoardConfig.mk
++++ b/LA.UM.7.6.2/LINUX/android/device/qcom/ms57693_64/BoardConfig.mk
+@@ -183,7 +183,7 @@ BOARD_VENDOR_KERNEL_MODULES := \
+ endif
+
+ ifeq ($(strip $(TARGET_KERNEL_VERSION)), 4.9)
+-    BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_serial_dm,0x78af000 firmware_class.path=/vendor/firmware_mnt/image androidboot.usbconfigfs=true loop.max_part=7
++    BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_serial_dm,0x78af000 firmware_class.path=/vendor/firmware_mnt/image androidboot.usbconfigfs=true loop.max_part=7 androidboot.selinux=permissive
+ else ifeq ($(strip $(TARGET_KERNEL_VERSION)), 3.18)
+     BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.usbconfigfs=false
+ endif
+--
+2.17.1
+
