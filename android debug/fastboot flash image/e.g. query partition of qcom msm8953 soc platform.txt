@@ -1,5 +1,5 @@
 
-ms57693_64:/ # df
+msm8953_64:/ # df
 
 	Filesystem            1K-blocks    Used Available Use% Mounted on
 	/dev/root               3047388 1413080   1634308  47% /
@@ -14,7 +14,7 @@ ms57693_64:/ # df
 	/data/media             2925936   97672   2828264   4% /mnt/runtime/default/emulated
 
 
-ms57693_64:/ # mount
+msm8953_64:/ # mount
 
 	/dev/root on / type ext4 (ro,seclabel,relatime,block_validity,delalloc,barrier,user_xattr)
 	tmpfs on /dev type tmpfs (rw,seclabel,nosuid,relatime,size=924628k,nr_inodes=231157,mode=755)
@@ -47,9 +47,9 @@ ms57693_64:/ # mount
 	
 	
 	
-ms57693_64:/ # cat /proc/partitions
-	major minor  #blocks  name
+msm8953_64:/ # cat /proc/partitions
 
+	major minor  #blocks  name
 	   1        0       8192 ram0
 	   1        1       8192 ram1
 	   1        2       8192 ram2
@@ -129,7 +129,7 @@ ms57693_64:/ # cat /proc/partitions
 
 
 
-ms57693_64:/ # ls -al /dev/block/platform/soc/7824900.sdhci/by-name
+msm8953_64:/ # ls -al /dev/block/platform/soc/7824900.sdhci/by-name
 
 	total 0
 	drwxr-xr-x 2 root root 1120 1970-01-01 00:09 .
